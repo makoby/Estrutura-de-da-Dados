@@ -1,9 +1,9 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 typedef struct no{
-    int dado;    /* informa√ß√£o */
-    struct no *prox; /* ponteiro para pr√≥ximo n√≥ */
-}tNo;  /* tipo do n√≥ */
+    int dado;    /* informaÁ„o */
+    struct no *prox; /* ponteiro para prÛximo nÛ */
+}tNo;  /* tipo do nÛ */
 
 typedef struct lista{
    struct no *cabeca;
@@ -17,88 +17,89 @@ int elemento (tLista lista, int pos, int *dado );
 int posicao (tLista lista, int dado);
 int insere (tLista *lista, int pos, int dado );
 int remov (tLista *lista, int pos, int *dado );
+void imprimirSaida(tLista lista);
 
-int insereInicioLista(tLista *lista, int valor);
+/*int insereInicioLista(tLista *lista, int valor);
 int insereMeioLista(tLista *lista, int pos, int dado);
-int inserirFimLista(tLista *lista, int dado);
-
-void imprimeLista(tLista lista) ;
+int inserirFimLista(tLista *lista, int dado);*/
 
 
-int main(void) {
 
-	char operacao=0;
-	int item=0;
+
+
+
+int main(){
+
 	tLista lista;
-	int pos=0;
+	char operacao;
+	int posicao,valor;
 
-    cria(&lista);
+	cria(&lista);
 
-while (operacao!='q'){
+	//printf("Tamanho lista: %d\n",lista.tamanho);
 
-    printf("Digite opera√ß√£o  \n");
-	scanf("%c",&operacao);
+	while(scanf("%c", &operacao) && (operacao != 'q')){
 
-	switch (operacao)
-        {
-        	case 'f':
-                	printf ("n Digite o item a ser inserido?\n");
-                	scanf("%d",&item);
-                	if(insereInicioLista(&lista,item) == 0){
-                        printf("Erro inserir dado\n");
-                	}
-        	break;
+		switch(operacao){
 
-            case 'i':
-                    printf ("\n Digite a posicao\n");
-                    scanf("%d",pos);
-                    printf ("\n o numero\n");
-                    scanf("%d",item);
-                    insereMeioLista(&lista, pos, item);
+			case 'f':
+				scanf("%d", &valor);
+				insere(&lista, 1, valor);
+				break;
+
+			case 'i':
+				scanf("%d %d", &posicao, &valor);
+				insere(&lista,posicao+1,valor);
+				break;
+
+			case 'd':
+				scanf("%d", &posicao);
+				remov(&lista, posicao+1, &valor);
             break;
 
-            case 'r':
+         case 'r':
+			   if (!vazia(lista)){
+               remov(&lista, 1, &valor);
+				//printf("Valor removido: %d\n", valor);
+            }
+				break;
 
-                    if(remov(&lista, 1, &item) == 0){
-                    printf("empty\n");
-                    }
-            break;
+		}
 
-        	default:
-                	printf ("\n default \n");
-        }
+      //limpar buffer pegando \n
+		scanf("%c", &operacao);
+		imprimirSaida(lista);
 
-
-
-    printf("\nlista \n");
-
-    imprimeLista(lista);
-}
-    getchar();
-
-	return 0;
-}
-
-void imprimeLista(tLista lista) {
-    int dado=0,tamLista = tamanho(lista),i=0;
-
-    if (vazia(lista)==1){
-        printf("empty\n");
-        return;
-    }
-
-    for(i = 1; i <= tamLista; i++)
-    {
-      elemento (lista, i, &dado);
-      printf("%d ",dado);
-    }
-
-    printf("\n");
-
-
-
+	}
+//imprimirSaida(lista);
 
 }
+
+void imprimirSaida(tLista lista){
+
+	if (vazia(lista)){
+
+		printf("empty\n");
+
+	}
+
+	else{
+
+		tNo *listaCabeca = lista.cabeca;
+		//printf("Tamanho da lista: %d\n",lista.tamanho);
+		while (listaCabeca != NULL){
+
+			printf("%d ", listaCabeca->dado );
+			listaCabeca = listaCabeca->prox;
+		}
+
+		printf("\n");
+
+
+	}
+
+}
+
 
 /**Cria uma Lista vazia */
 void cria (tLista *lista) {
@@ -106,7 +107,7 @@ void cria (tLista *lista) {
     lista->tamanho = 0;
 }
 
-/** Verifica se a Lista est√° vazia */
+/** Verifica se a Lista est· vazia */
 int vazia (tLista lista) {
     if (lista.tamanho == 0)
         return 1;
@@ -114,7 +115,7 @@ int vazia (tLista lista) {
         return 0;
 }
 
-/**Obt√©m o tamanho da Lista*/
+/**ObtÈm o tamanho da Lista*/
 int tamanho (tLista lista) {
     return lista.tamanho;
     /* ou
@@ -128,9 +129,9 @@ int tamanho (tLista lista) {
     */
 }
 
-/** Obt√©m o i-√©simo elemento de uma lista
-    Retorna 0 se a posi√ß√£o passada for inv√°lida,
-    caso contr√°rio 1. O par√¢metro dado ir√° receber
+/** ObtÈm o i-Èsimo elemento de uma lista
+    Retorna 0 se a posiÁ„o passada for inv·lida,
+    caso contr·rio 1. O par‚metro dado ir· receber
     o elemento encontrado*/
 int elemento (tLista lista, int pos, int *dado ) {
     tNo *p;
@@ -141,7 +142,7 @@ int elemento (tLista lista, int pos, int *dado ) {
             return 0;
     }
 
-    /* Percorre a lista do 1o elemento at√© pos */
+    /* Percorre a lista do 1o elemento atÈ pos */
     p = lista.cabeca;
     while ((p != NULL) && (n < pos)){
         /* modifica "p" para apontar para o proximo elemento da lista */
@@ -158,8 +159,8 @@ int elemento (tLista lista, int pos, int *dado ) {
     return 1;
 }
 
-/**Retorna a posi√ß√£o de um elemento pesquisado.
-    Retorna 0 caso n√£o seja encontrado */
+/**Retorna a posiÁ„o de um elemento pesquisado.
+    Retorna 0 caso n„o seja encontrado */
 int posicao (tLista lista, int dado) {
     int n = 1;
     tNo *p;
@@ -169,7 +170,7 @@ int posicao (tLista lista, int dado) {
             return 0;
     }
 
-    /* Percorre a lista do inicio ao fim at√© encontrar o elemento*/
+    /* Percorre a lista do inicio ao fim atÈ encontrar o elemento*/
     p = lista.cabeca;
 	while (p != NULL) {
         /* Se encontrar o elemento, retorna sua posicao n;*/
@@ -185,7 +186,7 @@ int posicao (tLista lista, int dado) {
     return 0;
 }
 
-/** Insere n√≥ em lista vazia */
+/** Insere nÛ em lista vazia */
 int insereInicioLista(tLista *lista, int valor) {
     tNo *novoNo;
 
@@ -197,25 +198,25 @@ int insereInicioLista(tLista *lista, int valor) {
 
     /* Insere novo elemento na cabeca da lista */
     novoNo->dado = valor;
-    novoNo->prox = NULL;
+    novoNo->prox = lista->cabeca;
     lista->cabeca = novoNo;
     lista->tamanho++;
     return 1;
 }
 
-/** Insere n√≥ no meio da lista */
+/** Insere nÛ no meio da lista */
 int insereMeioLista(tLista *lista, int pos, int dado){
     tNo *p, *novoNo;
 
     int n = 1;
-    /* Localiza a pos. onde ser√° inserido o novo n√≥ */
+    /* Localiza a pos. onde ser· inserido o novo nÛ */
     p = lista->cabeca;
     while ((n < pos-1) && (p != NULL)){
           p = p->prox;
           n++;
     }
 
-    if (p == NULL) {  /* pos. inv√°lida */
+    if (p == NULL) {  /* pos. inv·lida */
             return 0;
     }
 
@@ -234,7 +235,7 @@ int insereMeioLista(tLista *lista, int pos, int dado){
     return 1;
 }
 
-/** Insere n√≥ no fim da lista */
+/** Insere nÛ no fim da lista */
 int insereFimLista(tLista *lista, int dado){
     tNo *novoNo;
 
@@ -260,31 +261,32 @@ int insereFimLista(tLista *lista, int dado){
 }
 
 
-/**Insere um elemento em uma determinada posi√ß√£o
+/**Insere um elemento em uma determinada posiÁ„o
     Retorna 0 se a lista estiver cheia ou
-    a posi√ß√£o for inv√°lida. Caso contr√°rio retorna 1 */
+    a posiÁ„o for inv·lida. Caso contr·rio retorna 1 */
 int insere(tLista *lista, int pos, int dado ) {
-    tNo *p, *novoNo;
+    //tNo *p, *novoNo;
     int  ret, tamanho = lista->tamanho;
 
- 	/* inser√ß√£o no in√≠cio da lista (ou lista vazia)*/
+ 	/* inserÁ„o no inÌcio da lista (ou lista vazia)*/
     if ((vazia(*lista)) || (pos == 1)){
         ret = insereInicioLista(lista, dado);
         return ret;
     }
-    /* inser√ß√£o no fim da lista */
-    else if (pos == tamanho+1){
+    /* inserÁ„o no fim da lista */
+    /*alterei, coloquei o igual*/
+    else if (pos >= tamanho+1){
         ret = insereFimLista(lista, dado);
         return ret;
    }
-   /* inser√ß√£o no meio da lista */
+   /* inserÁ„o no meio da lista */
    else{
         ret = insereMeioLista(lista, pos, dado);
         return ret;
    }
 }
 
-/** Remove elemento do in√≠cio da lista */
+/** Remove elemento do inÌcio da lista */
 int removeInicioLista(tLista *lista, int *dado){
     tNo *p = lista->cabeca;
 
@@ -306,7 +308,7 @@ int removeNaLista(tLista *lista, int pos, int *dado){
      tNo *aux, *p;
      int n = 1;
 
-     /* Localiza o n√≥ que ser√° removido*/
+     /* Localiza o nÛ que ser· removido*/
      p = lista->cabeca;
      while((n < pos) && (p != NULL)){
            aux = p;
@@ -314,7 +316,7 @@ int removeNaLista(tLista *lista, int pos, int *dado){
            n++;
      }
 
-     if (p == NULL) { /* pos. inv√°lida */
+     if (p == NULL) { /* pos. inv·lida */
         return (0);
      }
 
@@ -328,9 +330,9 @@ int removeNaLista(tLista *lista, int pos, int *dado){
      return 1;
 }
 
-/**Remove um elemento de uma determinada posi√ß√£o
-    Retorna 0 se a posi√ß√£o for inv√°lida ou a lista
-    estiver vazia. Caso contr√°rio retorna 1 */
+/**Remove um elemento de uma determinada posiÁ„o
+    Retorna 0 se a posiÁ„o for inv·lida ou a lista
+    estiver vazia. Caso contr·rio retorna 1 */
 int remov (tLista *lista, int pos, int *dado ) {
     int  ret;
 
@@ -339,12 +341,12 @@ int remov (tLista *lista, int pos, int *dado ) {
             return 0;
     }
 
-    /*remo√ß√£o do elemento da cabe√ßa da lista */
+    /*remoÁ„o do elemento da cabeÁa da lista */
     if (pos == 1){
         ret = removeInicioLista(lista, dado);
         return ret;
     }
-    /* remo√ß√£o em outro lugar da lista*/
+    /* remoÁ„o em outro lugar da lista*/
     else{
         ret = removeNaLista(lista, pos, dado);
         return ret;
