@@ -30,14 +30,17 @@ int main(){
 
 	tLista lista;
 	char* operacao[10+1];
-    int valor;
+    int valor,quantidade;
 
 	cria(&lista);
 
-	printf("Tamanho lista: %d\n",lista.tamanho);
-    while (operacao[0] != 'q'){
-    scanf("%s",&operacao);
+	printf("Tamanho lista: %d\n",lista.tamanho);/* Apagar depois*/
 
+    scanf("%d",&quantidade);
+    while (quantidade > lista.tamanho){
+
+
+    scanf("%s",&operacao);
 	/* Remoção no final da lista*/
 	if (strcmp(operacao,"back") == 0){
         if (!vazia(lista)){
@@ -51,6 +54,7 @@ int main(){
 	else
 	/* Remove no inicio da lista*/
 	if (strcmp(operacao,"front") == 0){
+
         if (!vazia(lista)){
                remov(&lista, 1, &valor);
                printf("%d\n", valor);
@@ -60,8 +64,20 @@ int main(){
                printf("No job for Ada?\n");
 	}
     else
-    /* Reverte a lista*/
+      /* Reverte a lista*/
     if (strcmp(operacao,"reverse")==0){
+            imprimeLista(lista);
+        int tam = lista.tamanho/2;
+        int j=lista.tamanho;
+        int aux;
+        for(aux = 0; aux<tam; aux++,j--){
+            int temporario, temporario2;
+            remov(&lista, j,&temporario);
+            remov(&lista, aux+1,&temporario2);
+            insere(&lista, aux+1,temporario);
+            insere(&lista, j,temporario2);
+        }
+        imprimeLista(lista);
     }
     else
     /* Adiciona no final da lista*/
@@ -71,14 +87,16 @@ int main(){
     }
     else
     /* Adiciona no incio da lista*/
-    if (strcmp(operacao, "to_Front")==0){
+    if (strcmp(operacao, "toFront")==0){
         scanf(" %d",&valor);
         insere(&lista,1,valor);
     }
     printf("Tamanho lista: %d\n",lista.tamanho);
+
     imprimeLista(lista);
 
 }
+
     getchar();
 
 	return 0;
