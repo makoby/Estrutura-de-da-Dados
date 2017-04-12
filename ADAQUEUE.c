@@ -30,14 +30,17 @@ int main(){
 
 	tLista lista;
 	char* operacao[10+1];
-    int valor,quantidade;
+    int valor,quantidade,count;
 
 	cria(&lista);
 
-	printf("Tamanho lista: %d\n",lista.tamanho);/* Apagar depois*/
+	/*printf("Tamanho lista: %d\n",lista.tamanho);/* Apagar depois*/
 
     scanf("%d",&quantidade);
-    while (quantidade > lista.tamanho){
+    /* while (quantidade > lista.tamanho){ */
+    if (quantidade>0 && quantidade <1000001){
+
+    for(count=0 ; count < quantidade ; count++){
 
 
     scanf("%s",&operacao);
@@ -66,7 +69,7 @@ int main(){
     else
       /* Reverte a lista*/
     if (strcmp(operacao,"reverse")==0){
-            imprimeLista(lista);
+            /* imprimeLista(lista); */
         int tam = lista.tamanho/2;
         int j=lista.tamanho;
         int aux;
@@ -77,7 +80,7 @@ int main(){
             insere(&lista, aux+1,temporario);
             insere(&lista, j,temporario2);
         }
-        imprimeLista(lista);
+        /* imprimeLista(lista); */
     }
     else
     /* Adiciona no final da lista*/
@@ -91,12 +94,13 @@ int main(){
         scanf(" %d",&valor);
         insere(&lista,1,valor);
     }
-    printf("Tamanho lista: %d\n",lista.tamanho);
+    /* printf("Tamanho lista: %d\n",lista.tamanho); */
 
-    imprimeLista(lista);
+    /* imprimeLista(lista); */
 
 }
-
+}
+   /* imprimeLista(lista); */
     getchar();
 
 	return 0;
