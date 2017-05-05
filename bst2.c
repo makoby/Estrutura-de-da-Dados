@@ -25,16 +25,12 @@ void  insere (tNo **arv, int dado){
 }
 else if ((*arv )-> conteudo < dado) {
        c++;
-       /**/
 	   insere (&(*arv )-> dir, dado);
-	   printf("entrei no no da direita e c vale:%d\n",c);
 
 }
 else if ((*arv )->conteudo > dado) {
-	c++;
-	/**/
-	insere (&(*arv ) -> esq, dado);
-	printf("entrei no no da esquerda e c vale:%d\n",c);
+       c++;
+       insere (&(*arv ) -> esq, dado);
 	}
 }
 
